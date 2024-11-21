@@ -8,6 +8,7 @@ from datetime import datetime
 import os
 from PyQt6 import QtWidgets, QtGui, QtSql
 import conexion
+import conexionserver
 import eventos
 import var
 import zipfile
@@ -37,12 +38,14 @@ class Eventos():
 
     def cargarProv(self):
         var.ui.cmbProvcli.clear()
-        listado = conexion.Conexion.listarProv(self)
+        #listado = conexion.Conexion.listarProv(self)
+        listado = conexionserver.ConexionServer.listaProv(self)
         var.ui.cmbProvcli.addItems(listado)
 
     def cargarMuni(self):
         var.ui.cmbMunicli.clear()
-        municipios = conexion.Conexion.listarMunicli(var.ui.cmbProvcli.currentText())
+        # municipios = conexion.Conexion.listarMunicli(var.ui.cmbProvcli.currentText())
+        municipios = conexionserver.ConexionServer.listaMuniProv(var.ui.cmbProvcli.currentText())
         var.ui.cmbMunicli.addItems(municipios)
 
 

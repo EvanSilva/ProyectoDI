@@ -1,4 +1,5 @@
 import conexion
+import conexionserver
 import eventos
 from propiedades import Propiedades
 from venAux import *
@@ -21,13 +22,15 @@ class Main(QtWidgets.QMainWindow):
         var.dlgAbout = dlgAbout()
 
         self.setStyleSheet(styles.load_stylesheet())
-        conexion.Conexion.db_conexion(self)
+        # conexion.Conexion.db_conexion(self)
+        conexionserver.ConexionServer.crear_conexion(self)
+
         eventos.Eventos.cargarProv(self)
         eventos.Eventos.cargarMuni(self)
         var.historico = 1
         # conexionserver.ConexionServer()
 
-        eventos.Eventos.cargarTipoprop(self)
+        # eventos.Eventos.cargarTipoprop(self)
         eventos.Eventos.cargarProvProp(self)
         eventos.Eventos.cargarMuniProp(self)
         propiedades.Propiedades.cargaTablaPropiedades(self)
