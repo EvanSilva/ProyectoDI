@@ -4,6 +4,7 @@ from PyQt6 import QtWidgets, QtGui
 from PyQt6 import QtCore
 
 import conexion
+import conexionserver
 import eventos
 import propiedades
 import var
@@ -120,7 +121,7 @@ class Propiedades():
             if Propiedades.checkObligatoriosProp(self) and Propiedades.esMovilValido(propiedades[-1]):
                 print("PASO DE CHECKOBLIGATORIOSY ESMOVILVALIDO")
 
-                if conexion.Conexion.altaPropiedad(propiedades):
+                if conexionserver.ConexionServer.altaProp(propiedades):
                     mbox = QtWidgets.QMessageBox()
                     mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
                     mbox.setWindowIcon(QtGui.QIcon('./img/icono.ico'))
@@ -162,7 +163,7 @@ class Propiedades():
 
     def cargaTablaPropiedades(self):
         try:
-            listado = conexion.Conexion.listadoPropiedades()
+            listado = conexionserver.ConexionServer.listadoPropiedades(self)
             index = 0
             var.ui.tablaProp.setRowCount(len(listado))
             for registro in listado:
@@ -184,7 +185,6 @@ class Propiedades():
                 var.ui.tablaProp.setItem(index, 7, QtWidgets.QTableWidgetItem(string_limpio))
                 var.ui.tablaProp.setItem(index, 8, QtWidgets.QTableWidgetItem(str(registro[15])))
                 var.ui.tablaProp.setItem(index, 9, QtWidgets.QTableWidgetItem(str(registro[2])))
-
                 var.ui.tablaProp.item(index, 0).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter.AlignVCenter)
                 var.ui.tablaProp.item(index, 1).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignVCenter)
                 var.ui.tablaProp.item(index, 2).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignVCenter)
@@ -274,7 +274,7 @@ class Propiedades():
         try:
             fila = var.ui.tablaProp.selectedItems()
             datos = [dato.text() for dato in fila]
-            registro = conexion.Conexion.datosOnePropiedad(str(datos[0]))
+            registro = conexionserver.ConexionServer.datosOnePropiedad(str(datos[0]))
 
             listado = [
                 var.ui.txtProp,

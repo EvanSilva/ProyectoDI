@@ -6,6 +6,8 @@ import conexion
 import conexionserver
 import eventos
 import var
+from conexionserver import ConexionServer
+
 
 class Clientes:
 
@@ -169,18 +171,22 @@ class Clientes:
 
     def modifCliente(self):
         try:
-            modifcli = [var.ui.txtDnicli.text(),
-                        var.ui.txtAltacli.text(),
-                        var.ui.txtApelcli.text(),
-                        var.ui.txtNomecli.text(),
-                        var.ui.txtEmailcli.text(),
-                        var.ui.txtMovilcli.text(),
-                        var.ui.txtDircli.text(),
-                        var.ui.cmbProvcli.currentText(),
-                        var.ui.cmbMunicli.currentText(),
-                        var.ui.txtBajacli.text()]
+            modifcli = [
+                var.ui.txtAltacli.text(),
+                var.ui.txtApelcli.text(),
+                var.ui.txtNomecli.text(),
+                var.ui.txtEmailcli.text(),
+                var.ui.txtMovilcli.text(),
+                var.ui.txtDircli.text(),
+                var.ui.cmbProvcli.currentText(),
+                var.ui.cmbMunicli.currentText(),
+                var.ui.txtBajacli.text(),
+                var.ui.txtDnicli.text()]
 
-            if conexion.Conexion.modifCliente(modifcli):
+            print("Modifcli")
+            print(modifcli)
+
+            if conexionserver.ConexionServer.modifCliente(modifcli):
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
                 mbox.setWindowIcon(QtGui.QIcon('./img/inmoteis.ico'))
@@ -210,8 +216,7 @@ class Clientes:
 
     def bajaCliente(self):
         try:
-            datos = [var.ui.txtBajacli.text(), var.ui.txtDnicli.text()]
-            if conexion.Conexion.bajaCliente(datos):
+            if conexionserver.ConexionServer.bajaCliente(var.ui.txtDnicli.text()):
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
                 mbox.setWindowIcon(QtGui.QIcon('./img/inmoteis.ico'))

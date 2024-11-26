@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import mysql.connector
 from mysql.connector import Error
 
@@ -66,7 +68,7 @@ class ConexionServer():
             conexion = ConexionServer().crear_conexion()
             listadoclientes = []
             cursor = conexion.cursor()
-            cursor.execute("SELECT * FROM clientes ORDER BY apelcli, nomecli ASC")
+            cursor.execute("SELECT dnicli, altacli, apelcli, nomecli, dircli, emailcli, movilcli, provcli, municli, bajacli FROM clientes ORDER BY apelcli, nomecli ASC")
             resultados = cursor.fetchall()
             for fila in resultados:      # Procesar cada fila de los resultados y crea una lista con valores de la fila
                 listadoclientes.append(list(fila))  # Convierte la tupla en una lista y la añade a listadoclientes
@@ -93,6 +95,48 @@ class ConexionServer():
         except Error as e:
             print(f"Error al insertar el cliente: {e}")
 
+    def bajaCliente(dni):
+        try:
+            # Crear conexión
+            conexion = ConexionServer().crear_conexion()
+            if conexion:
+                cursor = conexion.cursor()
+                query = """
+                UPDATE clientes
+                SET bajacli = %s
+                WHERE dnicli = %s
+                """
+                bajahoy = datetime.now().strftime("%d/%m/%Y")
+                cursor.execute(query, (bajahoy, dni))
+                conexion.commit()
+                cursor.close()
+                conexion.close()
+                return True
+        except Error as e:
+            print(f"Error al dar de baja el cliente: {e}")
+            return False
+
+    def modifCliente(cliente):
+
+        try:
+            conexion = ConexionServer().crear_conexion()
+            if conexion:
+                cursor = conexion.cursor()
+                query = """
+                UPDATE clientes
+                SET altacli = %s, apelcli = %s, nomecli = %s, emailcli = %s, movilcli = %s,
+                    dircli = %s, provcli = %s, municli = %s, bajacli = %s
+                WHERE dnicli = %s
+                """
+                cursor.execute(query, cliente)
+                conexion.commit()
+                cursor.close()
+                conexion.close()
+                return True
+        except Error as e:
+            print(f"Error al modificar el cliente: {e}")
+            return False
+
     def datosOneCliente(dni):
         registro = []  # Inicializa la lista para almacenar los datos del cliente
         try:
@@ -100,8 +144,8 @@ class ConexionServer():
             if conexion:
                 cursor = conexion.cursor()
                 # Definir la consulta de selección
-                query = '''SELECT * FROM clientes WHERE dnicli = %s'''  # Usa %s para el placeholder
-                cursor.execute(query, (dni,))  # Pasar 'dni' como una tupla
+                query = '''SELECT * FROM clientes WHERE dnicli = %s'''
+                cursor.execute(query, (dni,))
                 # Recuperar los datos de la consulta
                 for row in cursor.fetchall():
                     registro.extend([str(col) for col in row])
@@ -110,3 +154,80 @@ class ConexionServer():
         except Exception as e:
             print("Error al obtener datos de un cliente:", e)
             return None  # Devolver None en caso de error
+
+
+
+
+
+ # PROPIEDADES ---------------------------------------------------------------------------------------
+
+
+
+
+
+
+    def listadoPropiedades(self):
+        try:
+            conexion = ConexionServer().crear_conexion()
+            listadoclientes = []
+            cursor = conexion.cursor()
+            cursor.execute("SELECT codigo, altaprop, bajaprop, dirprop, provprop, muniprop, tipoprop, habprop, banprop, superprop, prealquiprop, prevenprop, cpprop, obserprop, tipooper, estadoprop, nomeprop, movilprop FROM propiedades ORDER BY codigo")
+            resultados = cursor.fetchall()
+            for fila in resultados:
+                listadoclientes.append(list(fila))
+            cursor.close()
+            conexion.close()
+            return listadoclientes
+        except Exception as e:
+            print("error listado en conexion", e)
+
+
+    def datosOnePropiedad(id):
+        registro = []
+        try:
+            conexion = ConexionServer().crear_conexion()
+            if conexion:
+                cursor = conexion.cursor()
+                query = '''SELECT * FROM propiedades WHERE codigo = %s'''
+                cursor.execute(query, (id,))
+                for row in cursor.fetchall():
+                    registro.extend([str(col) for col in row])
+            return registro
+
+        except Exception as e:
+            print("Error al obtener datos de una propiedad:", e)
+            return None  # Devolver None en caso de error
+
+    def altaProp(cliente):
+        try:
+            conexion = ConexionServer().crear_conexion()
+            if conexion:
+                cursor = conexion.cursor()
+                query = """
+                INSERT INTO propiedades (codigo, altaprop, bajaprop, dirprop, provprop, muniprop, tipoprop, habprop, banprop, superprop, prealquiprop, prevenprop, cpprop, obserprop, tipooper, estadoprop, nomeprop, movilprop)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                """
+                cursor.execute(query, cliente)
+                conexion.commit()
+                cursor.close()
+                conexion.close()
+                return True
+        except Error as e:
+            print(f"Error al insertar el cliente: {e}")
+
+    def cargarTipoprop():
+        registro = []
+        try:
+            conexion = ConexionServer().crear_conexion()
+            if conexion:
+                cursor = conexion.cursor()
+                query = '''SELECT tipo FROM tipopropiedad'''
+                cursor.execute(query)
+                for row in cursor.fetchall():
+                    registro.extend([str(col) for col in row])
+            return registro
+
+        except Exception as e:
+            print("Error al obtener datos de un cliente:", e)
+            return None  # Devolver None en caso de error
+
