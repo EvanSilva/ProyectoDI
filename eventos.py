@@ -51,12 +51,14 @@ class Eventos():
 
     def cargarProvProp(self):
         var.ui.cmbProvprop.clear()
-        listado = conexion.Conexion.listarProv(self)
+        listado = conexionserver.ConexionServer.listaProv(self)
+        #listado = conexion.Conexion.listarProv(self)
         var.ui.cmbProvprop.addItems(listado)
 
     def cargarMuniProp(self):
         var.ui.cmbMuniprop.clear()
-        municipios = conexion.Conexion.listarMunicli(var.ui.cmbProvprop.currentText())
+        #municipios = conexion.Conexion.listarMunicli(var.ui.cmbProvprop.currentText())
+        municipios = conexionserver.ConexionServer.listaMuniProv(var.ui.cmbProvcli.currentText())
         var.ui.cmbMuniprop.addItems(municipios)
 
 
@@ -264,7 +266,7 @@ class Eventos():
             print("Error en abrir tipo tipo: ", error)
 
     def cargarTipoprop(self):
-        registro = conexion.Conexion.cargarTipoprop(self)
+        registro = conexionserver.ConexionServer.cargarTipoprop(self)
         var.ui.cmbTipoprop.clear()
         var.ui.cmbTipoprop.addItems(registro)
 

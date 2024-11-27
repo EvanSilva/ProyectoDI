@@ -122,6 +122,7 @@ class Propiedades():
                 print("PASO DE CHECKOBLIGATORIOSY ESMOVILVALIDO")
 
                 if conexionserver.ConexionServer.altaProp(propiedades):
+
                     mbox = QtWidgets.QMessageBox()
                     mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
                     mbox.setWindowIcon(QtGui.QIcon('./img/icono.ico'))
@@ -385,7 +386,8 @@ class Propiedades():
     def esMovilValido(movil):
 
         print("LLEGO AL VALIDADOR DEL MOVIL")
-        if len(movil) == 13 and movil.startswith("+") and movil[3] == " " and movil[4:].isdigit():
+        print(movil)
+        if len(movil) == 9:
             print("- TRUE")
             return True
         return False

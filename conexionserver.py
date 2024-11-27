@@ -198,24 +198,36 @@ class ConexionServer():
             print("Error al obtener datos de una propiedad:", e)
             return None  # Devolver None en caso de error
 
-    def altaProp(cliente):
+    def altaProp(propiedad):
         try:
             conexion = ConexionServer().crear_conexion()
             if conexion:
                 cursor = conexion.cursor()
+                print( len(propiedad))
+
+                propiedad[12] = str (propiedad[12])
+                print(propiedad)
+                print(propiedad[12])
                 query = """
-                INSERT INTO propiedades (codigo, altaprop, bajaprop, dirprop, provprop, muniprop, tipoprop, habprop, banprop, superprop, prealquiprop, prevenprop, cpprop, obserprop, tipooper, estadoprop, nomeprop, movilprop)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                INSERT INTO propiedades (altaprop, dirprop, provprop, muniprop, tipoprop, habprop, banprop, superprop, prealquiprop, prevenprop, cpprop, obserprop, tipooper, estadoprop, nomeprop, movilprop)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                 """
-                cursor.execute(query, cliente)
-                conexion.commit()
-                cursor.close()
-                conexion.close()
-                return True
-        except Error as e:
+                if len(propiedad) == 16:
+                    print("LLEGUÉ A 16 VALORES, ANTES DE EJECUTAR LA CONSULTA")
+                    # Ejecutar la consulta con los valores individuales
+                    cursor.execute(query, propiedad)
+                    conexion.commit()
+                    cursor.close()
+                    conexion.close()
+                    print("LLEGUÉ A TRUE")
+                    return True
+                else:
+                    print("Error: el cliente no tiene 16 elementos.")
+                    return False
+        except Exception as e:
             print(f"Error al insertar el cliente: {e}")
 
-    def cargarTipoprop():
+    def cargarTipoprop(self):
         registro = []
         try:
             conexion = ConexionServer().crear_conexion()

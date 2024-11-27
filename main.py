@@ -30,7 +30,7 @@ class Main(QtWidgets.QMainWindow):
         var.historico = 1
         # conexionserver.ConexionServer()
 
-        # eventos.Eventos.cargarTipoprop(self)
+        eventos.Eventos.cargarTipoprop(self)
         eventos.Eventos.cargarProvProp(self)
         eventos.Eventos.cargarMuniProp(self)
         propiedades.Propiedades.cargaTablaPropiedades(self)
