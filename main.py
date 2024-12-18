@@ -1,4 +1,5 @@
 import conexion
+import eventos
 from venAux import *
 from venPrincipal import *
 import sys
@@ -33,8 +34,8 @@ class Main(QtWidgets.QMainWindow):
         var.ui.chkVentaprop.setEnabled(False)
         var.ui.chkAlquiprop.setEnabled(False)
 
-        var.tablaActualCli = 1;
-        var.tablaActualProp = 1;
+        var.tablaActualCli = 0;
+        var.tablaActualProp = 0;
 
         '''
         
@@ -90,6 +91,7 @@ class Main(QtWidgets.QMainWindow):
 
         var.ui.btnAtrasProp.clicked.connect(eventos.Eventos.retrocederTablaProp)
         var.ui.btnAlanteProp.clicked.connect(eventos.Eventos.avanzarTablaProp)
+
 
 
         '''

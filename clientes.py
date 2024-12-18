@@ -32,7 +32,7 @@ class Clientes:
             else:
                 var.ui.txtEmailcli.setStyleSheet('background-color:#FFC0CB; font-style: italic;')
                 var.ui.txtEmailcli.setText(None)
-                var.ui.txtEmailcli.setText("correo no válido")
+                var.ui.txtEmailcli.setPlaceholderText("correo no válido")
                 var.ui.txtEmailcli.setFocus()
 
         except Exception as error:
@@ -285,7 +285,6 @@ class Clientes:
                         listado[i].setCurrentText(registro[i])
                     else:
                         listado[i].setText(registro[i])
-                    print(registro)
             else:
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)

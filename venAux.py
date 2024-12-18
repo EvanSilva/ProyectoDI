@@ -7,6 +7,7 @@ import var
 import eventos
 from dlgGestionprop import Ui_dlg_tipoprop
 
+
 class Calendar(QtWidgets.QDialog):
     def __init__(self):
         super(Calendar, self).__init__()
@@ -41,5 +42,7 @@ class dlgAbout(QtWidgets.QDialog):
         self.ui = Ui_dlgAbout()
         self.ui.setupUi(self)
         self.ui.btnAbout.clicked.connect(self.close)
+
+
 
 

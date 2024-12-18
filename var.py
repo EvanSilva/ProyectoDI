@@ -12,6 +12,7 @@ global dlgAbout
 global btn
 global historico
 global dlggestion
+global dlgPrueba
 
 global tablaActualCli
 global tablaActualProp

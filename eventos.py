@@ -335,6 +335,8 @@ class Eventos():
         except Exception as error:
             print("error en al abrir About ", error)
 
+
+
     def creditsToBua(self):
         mbox = QtWidgets.QMessageBox()
         mbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
@@ -495,3 +497,27 @@ class Eventos():
 
         except Exception as error:
             print("error en aplicar tabla ", error)
+
+    def comprobarFechaBaja(self):
+
+        try:
+
+            fechaActual = datetime.now()
+            fechaBaja = var.ui.txtBajaprop.text()
+            fechaBaja = datetime.strptime(fechaBaja, '%d/%m/%Y')
+
+            if fechaActual < fechaBaja:
+                return True
+            else:
+                return False
+
+        except Exception as error:
+            print("La fecha de baja es ", error)
+
+    #############################################  PRUEBAS  #############################################
+
+    def abrirPrueba(self):
+        try:
+            var.dlgPrueba.show()
+        except Exception as error:
+            print("error en al abrir Prueba ", error)
